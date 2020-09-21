@@ -21,9 +21,7 @@ def form_blocks(body):
 
 # global dead code elimination (intra-procedure)
 # remove instructions that defines a var that's never been used
-def elm_var():
-  prog = json.load(sys.stdin)
-  
+def elm_var(prog):
   for func in prog['functions']:
     change = True
     while change:
@@ -36,7 +34,8 @@ def elm_var():
         if 'dest' in instr and instr['dest'] not in used:
           func['instrs'].remove(instr)
           change = True
-      print(func)
+      # print(func)
+  # print(prog)
   return prog
 
 # local dead code elimination
@@ -54,7 +53,8 @@ def elm_reassign(prog):
           # remove used args first
           if 'args' in instr:
             for arg in instr['args']:
-              del last_def[arg]
+              if arg in last_def:
+                del last_def[arg]
           # remove reassignments
           if 'dest' in instr and instr['dest'] in last_def:
             func['instrs'].remove(last_def[instr['dest']])
@@ -63,10 +63,18 @@ def elm_reassign(prog):
           if 'dest' in instr:
             last_def[instr['dest']] = instr
               
-        print(prog)
+        # print(prog)
+  return prog
 
+def print_json(prog_update, filename):
+  with open(filename, 'w') as json_file:
+    json.dump(prog_update, json_file)
+  with open(filename, 'r') as f:
+    print(f.read())
 
 if __name__ == '__main__':
-  prog = elm_var()
-  print('---')
-  prog = elm_reassign(prog)
+  prog = json.load(sys.stdin)
+  prog_out_0 = elm_var(prog)
+  prog_out = elm_reassign(prog_out_0)
+  print_json(prog_out, 'simple_dse_out')
+
