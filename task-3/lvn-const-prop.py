@@ -96,7 +96,8 @@ def lvn_const_prop(prog):
 
 if __name__ == '__main__':
   prog = json.load(sys.stdin)
-  lvn_out = lvn_const_prop(prog)
+  # lvn_out = lvn_const_prop(prog)
+  print_json(lvn_out, 'lvn_const_prop_out.json')
   prog_out_1 = elm_var(lvn_out)
   prog_out_2 = elm_reassign(prog_out_1)
   print_json(prog_out_2, 'lvn_const_prop_out.json')

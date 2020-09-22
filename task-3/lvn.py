@@ -73,12 +73,13 @@ def lvn(prog):
       # print(block)
       build_instrs['instrs'].extend(block)
     prog_update['functions'].append(build_instrs)
-  print(prog)
+  # print(prog)
   return prog_update
 
 if __name__ == '__main__':
   prog = json.load(sys.stdin)
   lvn_out = lvn(prog)
+  # print_json(lvn_out, 'lvn_out.json')
   prog_out_1 = elm_var(lvn_out)
   prog_out_2 = elm_reassign(prog_out_1)
   print_json(prog_out_2, 'lvn_out.json')

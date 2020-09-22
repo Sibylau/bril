@@ -1,0 +1,1 @@
+{"functions": [{"instrs": [{"dest": "prod2", "op": "const", "type": "int", "value": 36}, {"args": ["prod2"], "op": "print"}], "name": "main"}]}

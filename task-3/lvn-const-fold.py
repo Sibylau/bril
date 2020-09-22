@@ -158,5 +158,5 @@ if __name__ == '__main__':
   lvn_out = lvn_const_prop(prog)
   prog_out_1 = elm_var(lvn_out)
   prog_out_2 = elm_reassign(prog_out_1)
-  print_json(prog_out_2, 'lvn_const_prop_out.json')
+  print_json(prog_out_2, 'lvn_const_fold_out.json')
 
