@@ -1,1 +1,0 @@
-{"functions": [{"instrs": [{"dest": "v0", "op": "const", "type": "int", "value": 1}, {"args": ["v0"], "op": "print"}, {"dest": "v1", "op": "const", "type": "int", "value": 2}, {"args": ["v1"], "op": "print"}, {"args": ["v1", "v0"], "dest": "v2", "op": "add", "type": "int"}, {"args": ["v2"], "op": "print"}, {"args": ["v2"], "op": "print"}], "name": "main"}]}
