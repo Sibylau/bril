@@ -76,5 +76,5 @@ if __name__ == '__main__':
   prog = json.load(sys.stdin)
   prog_out_0 = elm_var(prog)
   prog_out = elm_reassign(prog_out_0)
-  print_json(prog_out, 'simple_dse_out')
+  print_json(prog_out, 'simple_dse_out.json')
 
