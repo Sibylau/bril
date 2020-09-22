@@ -9,6 +9,30 @@ var2num = {} # maps current variables to entries in table
 def gen_random_num():
   yield random.sample(1000, 5)
 
+def arithmetic_comp(operation, op1, op2):
+  if operation == 'add':
+    return op1 + op2
+  if operation == 'mul':
+    return op1 * op2
+  if operation == 'sub':
+    return op1 - op2
+  if operation == 'div':
+    return op1 / op2
+  if operation == 'eq':
+    return op1 == op2
+  if operation == 'lt':
+    return op1 < op2
+  if operation == 'gt':
+    return op1 > op2
+  if operation == 'le':
+    return op1 <= op2
+  if operation == 'ge':
+    return op1 >= op2
+  if operation == 'and':
+    return op1 and op2
+  if operation == 'or':
+    return op1 or op2
+
 def lvn_const_prop(prog):
   # initialize updated prog
   prog_update = {}
@@ -79,12 +103,47 @@ def lvn_const_prop(prog):
           else:
             num = len(table)
             table.append({value: new_can_var})
+            if 'args' in instr:
+              comp_args = []
+              for ite in range(len(instr['args'])):
+                table_entry = table[var2num[instr['args'][ite]]]
+                value_tuple = list(table_entry.keys())[0]
+                can_var = list(table_entry.values())[0]
+                instr['args'][ite] = can_var
+                if value_tuple[0] == 'const':
+                  comp_args.append(value_tuple[1])
+                if len(comp_args) > 1:
+                  const_value = arithmetic_comp(instr['op'], comp_args[0], comp_args[1])
+                  dest = instr['dest']
+                  val_type = instr['type']
+                  instr.clear()
+                  instr["dest"] = dest
+                  instr["op"] = "const"
+                  instr["type"] = val_type
+                  instr["value"] = const_value
+                  table[-1] = {("const", instr["value"]): new_can_var}
+          # else:
+          #   num = len(table)
+          #   table.append({value: new_can_var})
 
-          # update instruction args
-          if 'args' in instr:
-            for ite in range(len(instr['args'])):
-              can_var = list(table[var2num[instr['args'][ite]]].values())[0]
-              instr['args'][ite] = can_var
+          # # update instruction args
+          # if 'args' in instr:
+          #   comp_args = []
+          #   for ite in range(len(instr['args'])):
+          #     table_entry = table[var2num[instr['args'][ite]]]
+          #     value_tuple = list(table_entry.keys())[0]
+          #     can_var = list(table_entry.values())[0]
+          #     instr['args'][ite] = can_var
+          #     if value_tuple[0] == 'const':
+          #       comp_args.append(value_tuple[1])
+          #   # if len(comp_args) > 1:
+          #   #   dest = instr['dest']
+          #   #   val_type = instr['type']
+          #   #   instr.clear()
+          #   #   instr["dest"] = dest
+          #   #   instr["op"] = "const"
+          #   #   instr["type"] = val_type
+          #   #   instr["value"] = arithmetic_comp(instr['op'], comp_args[0], comp_args[1])
 
         if 'dest' in instr:
           var2num[instr['dest']] = num
