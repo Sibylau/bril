@@ -34,7 +34,7 @@ def rename_block(entry, name2block, get_succ_out, dom_t):
       if 'args' in instr and instr['op'] != 'phi':
         for i in range(len(instr['args'])):
           old_arg = instr['args'][i]
-          if old_arg in stack:
+          if old_arg in stack and stack[old_arg]:
             new_arg = stack[old_arg][-1]
             instr['args'][i] = new_arg
       if 'dest' in instr:
@@ -50,8 +50,6 @@ def rename_block(entry, name2block, get_succ_out, dom_t):
           for arg in instr['args']:
             if arg in stack.keys() and stack[arg]:
               index = instr['args'].index(arg)
-              # print(stack)
-              # print(arg)
               instr['args'][index] = stack[arg][-1]
               instr['labels'][index] = block
               break
