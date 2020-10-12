@@ -7,7 +7,10 @@ Pass sys.stdin parameter:
  - `dom_tree`: print a mapping from each node to its children nores in the dominator tree
  - `dom_frontier`: print domination frontier for each basic block.
 
-SSA has not finished yet. I fell off my bike last Saturday and got fracture on my left foot. 
-I got several doctor appointments these days. Sorry about it... I'll fill in SSA code later.
+Finished conversion to SSA (`to_ssa.py`) and from SSA (`from_ssa.py`). They passed the given tests:
 
+<img src="https://github.com/Sibylau/bril/blob/scratch/task-5/snapshots/to_ssa_test.PNG" width="600"> 
+
+This is what the converted SSA looks like for loop-orig.bril:  
+<img src="https://github.com/Sibylau/bril/blob/scratch/task-5/snapshots/loop_orig.PNG" width="600"> 
  
