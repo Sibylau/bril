@@ -24,7 +24,7 @@ def dominators(prog, mode):
         if update_set != dom[name]:
           dom[name] = update_set
           change = True
-    # print(dom)
+    print(dom)
     if mode == 'dom':
       print(dom)
     elif mode == 'dom_tree':
@@ -38,15 +38,16 @@ def dom_tree(dom):
   dominance tree
   '''
   # transform to a strict dominance mapping
+  strict_dom = {}
   for node, dom_set in dom.items():
-    dom_set.remove(node)
+    strict_dom[node] = dom_set - {node}
 
-  dom_tree = {name: set() for name in dom.keys()}
-  for node, dom_set in dom.items():
+  dom_tree = {name: set() for name in strict_dom.keys()}
+  for node, dom_set in strict_dom.items():
     direct_dom = dom_set - {node}
     for name in dom_set:
       if name != node:
-        direct_dom = direct_dom - dom[name]
+        direct_dom = direct_dom - strict_dom[name]
     for name in direct_dom:
       dom_tree[name].add(node)
   # print(dom_tree)
