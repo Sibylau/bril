@@ -1,0 +1,7 @@
+{"dest":"v","op":"const","type":"int","value":4}
+{"dest":"b","op":"const","type":"bool","value":false}
+{"dest":"b_not","op":"const","type":"bool","value":true}
+{"args":["b_not"],"labels":["failed"],"op":"guard"}
+{"dest":"v","op":"const","type":"int","value":2}
+{"args":["v"],"op":"print"}
+2

@@ -399,6 +399,43 @@ function evalCall(instr: bril.Operation, state: State): Action {
  * instruction or "end" to terminate the function.
  */
 function evalInstr(instr: bril.Instruction, state: State): Action {
+
+  // dump out instructions
+  switch (instr.op) {
+    // eliminate jumps
+    case "jmp": {break;}
+    // replace branches with guards
+    case "br" : {
+      let cond_name = instr["args"];
+      let n_cond_name = cond_name + "_not";
+      let cond = getBool(instr, state.env, 0);
+
+      if (!cond) {
+        // get a true variable, and insert a guard operation
+        // console.log(JSON.stringify(instr));
+        // var not_instr = {"args": cond_name, "dest": n_cond_name,
+        //   "op": "not", "type": "bool"};
+        var true_instr = {"dest": n_cond_name, "op": "const", 
+          "type": "bool", "value": true};
+        console.log(JSON.stringify(true_instr));
+        var guard_instr = {"args": [n_cond_name], "labels": ["failed"], "op": "guard"};
+        console.log(JSON.stringify(guard_instr));
+      }
+      else {
+        // replace with a guard operation
+        // console.log(JSON.stringify(instr));
+        let cond_name = instr["args"] + "";
+        var guard_instr = {"args": [cond_name], "labels": ["failed"], "op": "guard"};
+        console.log(JSON.stringify(guard_instr));
+      }
+      break;
+    }
+    default: {
+      console.log(JSON.stringify(instr));
+      break;
+    }
+  }
+
   state.icount += BigInt(1);
 
   // Check that we have the right number of arguments.
