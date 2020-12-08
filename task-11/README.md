@@ -12,6 +12,7 @@ Under `task-11/test/` folder:
  - `bril2json < br.bril | python ../stitch.py br.trace | ../../bril-ts/build/brili.js` runs a simple dead code elimination and passes the output to the interpreter.
  
 Here's the output before tracing JIT optimization. Note that I inserted a `b_not` variable before the `guard` instruction:
-<img src="https://github.com/Sibylau/bril/blob/scratch/task-11/snapshots/1.PNG" width="600">
+<img src="https://github.com/Sibylau/bril/blob/scratch/task-11/snapshots/1.PNG" width="800">
+
 And here's the output after optimization:
-<img src="https://github.com/Sibylau/bril/blob/scratch/task-11/snapshots/2.PNG" width="600">
+<img src="https://github.com/Sibylau/bril/blob/scratch/task-11/snapshots/2.PNG" width="850">
